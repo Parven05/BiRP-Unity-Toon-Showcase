@@ -576,7 +576,8 @@ namespace LWGUI
 
 		public static void SetShaderKeyWord(Object[] materials, string[] keyWords, int index)
 		{
-			Debug.Assert(keyWords.Length >= 1 && index < keyWords.Length && index >= 0, "KeyWords: "+keyWords+" or Index: "+index+" Error! ");
+			Debug.Assert(keyWords.Length >= 1 && index < keyWords.Length && index >= 0,
+				"KeyWords: " + keyWords + " or Index: " + index + " Error! ");
 			for (int i = 0; i < keyWords.Length; i++)
 			{
 				SetShaderKeyWord(materials, keyWords[i], index == i);
