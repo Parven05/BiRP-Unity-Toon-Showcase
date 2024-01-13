@@ -1,0 +1,74 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78b2425a2284af743826c689403a4924, type: 3}
+  m_Name: Posterized Shade 4 Point Lights
+  m_EditorClassIdentifier: 
+  m_functionInfo: "// Made with Amplify Shader Editor v1.9.1.5\n// Available at the
+    Unity Asset Store - http://u3d.as/y3X \n/*ASEBEGIN\nVersion=19105\nNode;AmplifyShaderEditor.FunctionInput;15;-1000.499,434.9993;Inherit;False;World
+    Normal;3;0;False;1;0;FLOAT3;0,0,1;False;1;FLOAT3;0\nNode;AmplifyShaderEditor.WorldPosInputsNode;13;-1005.897,294.499;Inherit;False;0;4;FLOAT3;0;FLOAT;1;FLOAT;2;FLOAT;3\nNode;AmplifyShaderEditor.FunctionInput;20;-1012.37,508.0243;Inherit;False;Posterize
+    Steps;1;1;False;1;0;FLOAT;5;False;1;FLOAT;0\nNode;AmplifyShaderEditor.FunctionInput;21;-977.479,579.7215;Inherit;False;Occlusion;1;2;False;1;0;FLOAT;1;False;1;FLOAT;0\nNode;AmplifyShaderEditor.FunctionOutput;0;-352.1308,399.1978;Inherit;False;True;-1;Color;0;True;1;0;FLOAT3;0,0,0;False;1;FLOAT3;0\nNode;AmplifyShaderEditor.CustomExpressionNode;19;-721.8658,399.3246;Inherit;False;#ifdef
+    VERTEXLIGHT_ON$    // to light vectors$    float4 toLightX = unity_4LightPosX0
+    - posWorld.x@$    float4 toLightY = unity_4LightPosY0 - posWorld.y@$    float4
+    toLightZ = unity_4LightPosZ0 - posWorld.z@$    // squared lengths$    float4
+    lengthSq = 0@$    lengthSq += toLightX * toLightX@$    lengthSq += toLightY *
+    toLightY@$    lengthSq += toLightZ * toLightZ@$    // don't produce NaNs if some
+    vertex position overlaps with the light$    lengthSq = max(lengthSq, 0.000001)@$$   
+    // NdotL$    float4 ndotl = 0@$    ndotl += toLightX * normalWorld.x@$    ndotl
+    += toLightY * normalWorld.y@$    ndotl += toLightZ * normalWorld.z@$    // correct
+    NdotL$    float4 corr = rsqrt(lengthSq)@$    ndotl = max (float4(0,0,0,0), ndotl
+    * corr)@$$    // attenuation$    // fixed atten by d4rkpl4y3r#2639$    float4
+    atten = saturate((1 - (unity_4LightAtten0 * lengthSq / 25)))@$    // shade with
+    ndotl, darken with occlusion$    float4 diff = atten * ndotl * occlusion@$$   
+    // posterize$    float steps = posterizeSteps@$    diff = round(diff * ceil(steps))
+    / floor(steps)@$$    // final color$    float3 col = 0@$    col += unity_LightColor[0].rgb
+    * diff.x@$    col += unity_LightColor[1].rgb * diff.y@$    col += unity_LightColor[2].rgb
+    * diff.z@$    col += unity_LightColor[3].rgb * diff.w@$    return col@$#endif$$return
+    float3(0,0,0)@;3;Create;4;False;posWorld;FLOAT3;0,0,0;In;;Float;False;False;normalWorld;FLOAT3;0,0,0;In;;Float;False;False;posterizeSteps;FLOAT;0;In;;Inherit;False;True;occlusion;FLOAT;0;In;;Inherit;False;Posterized
+    Shade4PointLights;True;False;0;;False;4;0;FLOAT3;0,0,0;False;1;FLOAT3;0,0,0;False;2;FLOAT;0;False;3;FLOAT;0;False;1;FLOAT3;0\nWireConnection;0;0;19;0\nWireConnection;19;0;13;0\nWireConnection;19;1;15;0\nWireConnection;19;2;20;0\nWireConnection;19;3;21;0\nASEEND*/\n//CHKSM=04C09D9C54C3EDCF779665ABE72DB6690BBF5738"
+  m_functionName: 
+  m_description: Posterized Shade4PointLights, by Symmasolan. Original code in custom
+    URL.
+  m_additionalIncludes:
+    m_additionalIncludes: []
+    m_outsideIncludes: []
+  m_additionalPragmas:
+    m_additionalPragmas: []
+    m_outsidePragmas: []
+  m_additionalDirectives:
+    m_validData: 0
+    m_isDirty: 1
+    m_moduleName: ' Additional Directives'
+    m_independentModule: 1
+    m_customEdited: 0
+    m_additionalDirectives:
+    - {fileID: 0}
+    m_shaderFunctionDirectives: []
+    m_nativeDirectives: []
+    m_nativeDirectivesIndex: -1
+    m_nativeDirectivesFoldout: 0
+    m_directivesSaveItems:
+    - LineType: 2
+      LineValue: multi_compile _ VERTEXLIGHT_ON
+      GUIDToggle: 0
+      GUIDValue: 
+      ShowConditionals: 0
+      VersionMin: 0
+      VersionMax: 0
+      Passes: 
+      Origin: 2
+  m_nodeCategory: 0
+  m_headerStyle: 2
+  m_headerColor: {r: 0.8862745, g: 0, b: 0.627451, a: 1}
+  m_customNodeCategory: Symm Toon
+  m_previewPosition: 0
+  m_hidden: 0
+  m_url: https://github.com/TwoTailsGames/Unity-Built-in-Shaders/blob/master/CGIncludes/UnityCG.cginc#L253
