@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: mat_SCSExample_NoOutline
-  m_Shader: {fileID: 4800000, guid: e344358da9bef1244bc7610597f116f6, type: 3}
+  m_Shader: {fileID: 4800000, guid: b9e572a27568d9f4290afb02eef356bc, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
