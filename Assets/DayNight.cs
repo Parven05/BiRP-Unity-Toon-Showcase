@@ -1,84 +1,97 @@
 using UnityEngine;
 
 public class DayNight : MonoBehaviour
-{ 
-  [SerializeField] private Color nightColor = Color.black;
-  [SerializeField] private Color dayFogColor;
-  [SerializeField] private float dayFogDensity;
-  [SerializeField] private float nightFogDensity;
-  [SerializeField] private Color dayCameraColor;
-  [ColorUsage(true, true)]
-  [SerializeField] private Color dayAmbientLight;
-  [ColorUsage(true, true)]
-  [SerializeField] private Color nightAmbientLight;
-  [SerializeField] private GameObject directionalLight;
-  [SerializeField] private GameObject spotLight;
-  [SerializeField] private bool isNight = false;
+{
+    [Header("Colors")]
+    [SerializeField] private Color dayCameraColor;
+    [SerializeField] private Color eveningCameraColor;
+    [SerializeField] private Color nightColor;
+
+    [Header("Fog")]
+    [SerializeField] private Color dayFogColor;
+    [SerializeField] private float dayFogDensity;
+    [SerializeField] private Color eveningFogColor;
+    [SerializeField] private float eveningFogDensity;
+    [SerializeField] private float nightFogDensity;
+
+    [Header("Ambient Light")]
+    [ColorUsage(true, true)]
+    [SerializeField] private Color dayAmbientLight;
+    [ColorUsage(true, true)]
+    [SerializeField] private Color eveningAmbientLight;
+    [ColorUsage(true, true)]
+    [SerializeField] private Color nightAmbientLight;
+
+    [Header("Lights")]
+    [SerializeField] private Light directionalLight;
+    [SerializeField] private GameObject spotLight;
+
+    [Header("Mode Control")]
+    [SerializeField] private bool isNight = false;
+    [SerializeField] private bool isEvening = false;
 
     void Start()
     {
-        // Save the original camera color and ambient light
         dayCameraColor = Camera.main.backgroundColor;
         dayAmbientLight = RenderSettings.ambientLight;
     }
 
     void Update()
     {
-        // Toggle night mode on 'N' key press
-        if (Input.GetKeyDown(KeyCode.N))
+        if (Input.GetKeyDown(KeyCode.Alpha3)) // Number 3 key for night
         {
             isNight = !isNight;
+            isEvening = false;
 
-            if (isNight)
-            {
-                SetNightMode();
-            }
-            else
-            {
-                SetDayMode();
-            }
+            if (isNight) SetNightMode();
+            else SetDayMode();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha2)) // Number 2 key for evening
+        {
+            isEvening = !isEvening;
+            isNight = false;
+
+            if (isEvening) SetEveningMode();
+            else SetDayMode();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha1)) // Number 1 key for day
+        {
+            isNight = false;
+            isEvening = false;
+            SetDayMode();
         }
     }
 
     void SetNightMode()
     {
-        // Set camera background color to night color
         Camera.main.backgroundColor = nightColor;
-
-        // Set ambient light to night color
         RenderSettings.ambientLight = nightAmbientLight;
-        
-        //Set fog to black
         RenderSettings.fogColor = nightColor;
-        
-        //Set fog density
         RenderSettings.fogDensity = nightFogDensity;
-
-        // Turn off directional light if exists
-        directionalLight.SetActive(false);
-        
-        //Turn on flashlight
+        directionalLight.enabled = false;
         spotLight.SetActive(true);
     }
 
     void SetDayMode()
     {
-        // Restore original camera color
         Camera.main.backgroundColor = dayCameraColor;
-
-        // Restore original ambient light
         RenderSettings.ambientLight = dayAmbientLight;
-        
-        //Set fog to Orange
         RenderSettings.fogColor = dayFogColor;
-        
-        //Set fog density
         RenderSettings.fogDensity = dayFogDensity;
+        directionalLight.enabled = true;
+        spotLight.SetActive(false);
+    }
 
-        // Turn on directional light if exists
-        directionalLight.SetActive(true);
-        
-        //Turn off flashlight
+    void SetEveningMode()
+    {
+        Camera.main.backgroundColor = eveningCameraColor;
+        RenderSettings.ambientLight = eveningAmbientLight;
+        RenderSettings.fogColor = eveningFogColor;
+        RenderSettings.fogDensity = eveningFogDensity;
+        directionalLight.enabled = true;
+        directionalLight.intensity = 0.5f;
         spotLight.SetActive(false);
     }
 }

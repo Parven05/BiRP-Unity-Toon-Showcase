@@ -383,10 +383,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1387793887}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 0}
-  m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -128.6, y: 26}
-  m_SizeDelta: {x: 309.2099, y: 50}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 163.90002, y: -73.6}
+  m_SizeDelta: {x: 309.20996, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &368092411
 MonoBehaviour:
@@ -435,8 +435,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 30
+  m_fontSizeBase: 30
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -1045,8 +1045,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 237.44617, y: -36.5}
-  m_SizeDelta: {x: 455.2924, y: 50}
+  m_AnchoredPosition: {x: 259.15375, y: -36.5}
+  m_SizeDelta: {x: 498.7075, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1323899438
 MonoBehaviour:
@@ -1101,7 +1101,7 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_HorizontalAlignment: 1
   m_VerticalAlignment: 256
   m_textAlignment: 65535
@@ -1354,16 +1354,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbe5f2a60c977c1479192be545da88f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dayCameraColor: {r: 0.42745098, g: 0.5882353, b: 1, a: 0}
+  eveningCameraColor: {r: 1, g: 0.5140512, b: 0.3830188, a: 0}
   nightColor: {r: 0, g: 0, b: 0, a: 1}
   dayFogColor: {r: 0.9411765, g: 0.72156864, b: 0.4862745, a: 0}
   dayFogDensity: 0.02
+  eveningFogColor: {r: 1, g: 0.5137255, b: 0.38431373, a: 0}
+  eveningFogDensity: 0.03
   nightFogDensity: 0.04
-  dayCameraColor: {r: 0.42745098, g: 0.5882353, b: 1, a: 0}
   dayAmbientLight: {r: 0.32, g: 0.32, b: 0.32, a: 0}
+  eveningAmbientLight: {r: 0.32, g: 0.32, b: 0.32, a: 0}
   nightAmbientLight: {r: 0.16, g: 0.16, b: 0.16, a: 0}
-  directionalLight: {fileID: 705507993}
+  directionalLight: {fileID: 705507994}
   spotLight: {fileID: 130472642}
   isNight: 0
+  isEvening: 0
 --- !u!1001 &1358313465
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1614,8 +1619,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d939edc51ed46ca4da9e9afd32201153, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sobelMat: {fileID: 0}
   SobelResolution: 1
-  outlineColor: {r: 0, g: 0, b: 0, a: 0}
+  outlineColor:
+    r: 0
+    g: 0
+    b: 0
+    a: 0
 --- !u!114 &1663364733
 MonoBehaviour:
   m_ObjectHideFlags: 0
