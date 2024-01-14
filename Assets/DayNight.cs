@@ -9,8 +9,8 @@ public class DayNight : MonoBehaviour
 
     [Header("Fog")]
     [SerializeField] private Color dayFogColor;
-    [SerializeField] private float dayFogDensity;
     [SerializeField] private Color eveningFogColor;
+    [SerializeField] private float dayFogDensity;
     [SerializeField] private float eveningFogDensity;
     [SerializeField] private float nightFogDensity;
 
