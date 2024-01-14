@@ -1,5 +1,12 @@
 {
   "dependencies": {
+    "com.agm.edge-detection": {
+      "version": "https://github.com/AGM-GR/EdgeDetection.git#1.1.0",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "abd70c13b607079f2a1d48334a6989101405d7c7"
+    },
     "com.autodesk.fbx": {
       "version": "4.2.1",
       "depth": 1,

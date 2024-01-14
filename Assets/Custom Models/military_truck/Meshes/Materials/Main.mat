@@ -131,7 +131,7 @@ Material:
     - _OcclusionStrength: 1
     - _Outline: 1
     - _OutlineMaskAlphaClip: 0.5
-    - _OutlineSize: 0.01
+    - _OutlineSize: 0.02
     - _Parallax: 0.02
     - _PointSpotLightBoost: 10
     - _SmoothnessStrength: 1
