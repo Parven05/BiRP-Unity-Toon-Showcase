@@ -2472,8 +2472,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   torchLight: {fileID: 8816658853875303372}
   torchPos: {fileID: 747126547}
-  onClip: {fileID: 8300000, guid: f6323963677a5994d85132c19ba724ec, type: 3}
-  offClip: {fileID: 8300000, guid: 5b7e4d1ad9096a342bbd4f1491d5aee4, type: 3}
+  onClip: {fileID: 8300000, guid: c56b8662ec531c34cb13581d8421bc72, type: 3}
+  offClip: {fileID: 8300000, guid: ed607d07c0ab4394682ff5123bbeb6cb, type: 3}
 --- !u!1 &1323899436
 GameObject:
   m_ObjectHideFlags: 0
