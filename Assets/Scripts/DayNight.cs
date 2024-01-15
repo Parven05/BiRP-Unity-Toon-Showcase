@@ -25,7 +25,6 @@ public class DayNight : MonoBehaviour
 
     [Header("Lights")]
     [SerializeField] private Light directionalLight;
-    [SerializeField] private GameObject spotLight;
 
     [Header("Timer")]
     [SerializeField] private float totalTransitionTimeInMinutes = 1f; // Total time for one complete day-night cycle in minutes
@@ -77,7 +76,6 @@ public class DayNight : MonoBehaviour
         RenderSettings.fogDensity = Mathf.Lerp(dayFogDensity, eveningFogDensity, lerpValue);
         directionalLight.enabled = true;
         directionalLight.intensity = Mathf.Lerp(1.0f, 0.5f, lerpValue);
-        spotLight.SetActive(false);
     }
 
     void SetEveningToNightMode(float lerpValue)
@@ -88,7 +86,6 @@ public class DayNight : MonoBehaviour
         RenderSettings.fogDensity = Mathf.Lerp(eveningFogDensity, nightFogDensity, lerpValue);
         directionalLight.intensity = Mathf.Lerp(0.5f, 0.0f, lerpValue);
         directionalLight.enabled = false;
-        spotLight.SetActive(true);
     }
 
     void UpdateTimerText()
