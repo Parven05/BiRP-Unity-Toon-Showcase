@@ -2508,7 +2508,7 @@ MonoBehaviour:
   nightAmbientLight: {r: 0.16, g: 0.16, b: 0.16, a: 0}
   directionalLight: {fileID: 705507994}
   spotLight: {fileID: 2003787740}
-  totalTransitionTimeInMinutes: 1
+  totalTransitionTimeInMinutes: 0.5
   timerText: {fileID: 1825738968}
 --- !u!1001 &1358313465
 PrefabInstance:
@@ -8007,7 +8007,7 @@ Light:
       e32: 0
       e33: 1
     m_UseCullingMatrixOverride: 0
-  m_Cookie: {fileID: 0}
+  m_Cookie: {fileID: 2800000, guid: 24ed4361f79e4834baa9d6b801b9404a, type: 3}
   m_DrawHalo: 0
   m_Flare: {fileID: 0}
   m_RenderMode: 0
