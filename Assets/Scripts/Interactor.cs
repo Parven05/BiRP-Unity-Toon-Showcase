@@ -4,15 +4,17 @@ using UnityEngine;
 
 public class Interactor : MonoBehaviour
 {
+    public static Interactor Instance { get; private set; }
+
     [SerializeField] private LayerMask interactableLayerMask;
     [SerializeField] private float interactRadius = 5f;
     private Collider[] colliderArray;
-    private bool isInteractWithSomthing;
     private IInteractable currentInteractable;
 
     [SerializeField] private InteractionUI interactUI;
     private void Awake()
     {
+        Instance = this;
         colliderArray = new Collider[10];
     }
 
@@ -45,8 +47,13 @@ public class Interactor : MonoBehaviour
         {
             if (currentInteractable != null)
             {
-                currentInteractable.Interact();
+                currentInteractable.Interact(transform);
             }
         }
+    }
+
+    public IInteractable GetInteractable()
+    {
+        return currentInteractable;
     }
 }

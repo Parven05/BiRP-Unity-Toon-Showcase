@@ -7,15 +7,15 @@ public class TruckInteraction : MonoBehaviour,IInteractable
 {
     public static TruckInteraction Instance { get; private set; }
 
-    public event EventHandler OnPlayerInteractedWithTruck;
+    public event Action<Transform> OnPlayerInteractedWithTruck;
     private void Awake()
     {
         Instance = this;
     }
-    public void Interact()
+    public void Interact(Transform interactor)
     {
         Debug.Log("Truck Interacted");
-        OnPlayerInteractedWithTruck?.Invoke(this, EventArgs.Empty);
+        OnPlayerInteractedWithTruck?.Invoke(interactor);
     }
 
    
