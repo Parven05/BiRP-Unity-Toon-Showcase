@@ -11,8 +11,6 @@ public class TorchLight : MonoBehaviour
     [SerializeField] private AudioClip onClip;
     [SerializeField] private AudioClip offClip;
 
-    private bool isTorchOn = false;
-
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.F))
@@ -21,19 +19,12 @@ public class TorchLight : MonoBehaviour
         }
     }
 
-    void ToggleTorch()
+    private void ToggleTorch()
     {
-        isTorchOn = !isTorchOn;
+        // flipping Torch State
+        torchLight.SetActive(!torchLight.activeSelf);
 
-        if (isTorchOn)
-        {
-            torchLight.SetActive(true);
-            AudioSource.PlayClipAtPoint(onClip, torchPos.position, 1f);
-        }
-        else
-        {
-            torchLight.SetActive(false);
-            AudioSource.PlayClipAtPoint(offClip, torchPos.position, 1f);
-        }
+        // Simplyfied If Statements
+        AudioSource.PlayClipAtPoint(torchLight.activeSelf ? onClip : offClip, torchPos.position, 1f);
     }
 }
