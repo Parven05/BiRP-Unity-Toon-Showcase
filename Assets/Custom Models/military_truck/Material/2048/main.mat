@@ -41,7 +41,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _BumpMap:
-        m_Texture: {fileID: 2800000, guid: 64a5c833e0bc1c2499795ab158d59cbe, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DetailAlbedoMap:
@@ -132,7 +132,7 @@ Material:
     - _OutlineSize: 0.02
     - _Parallax: 0.02
     - _PointSpotLightBoost: 10
-    - _SmoothnessStrength: 1
+    - _SmoothnessStrength: 0
     - _SrcBlend: 1
     - _StencilBufferComparison: 0
     - _StencilBufferFailFront: 0

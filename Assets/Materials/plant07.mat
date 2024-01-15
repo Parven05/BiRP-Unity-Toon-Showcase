@@ -132,7 +132,7 @@ Material:
     - _OutlineSize: 0.02
     - _Parallax: 0.02
     - _PointSpotLightBoost: 10
-    - _SmoothnessStrength: 1
+    - _SmoothnessStrength: 0
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
