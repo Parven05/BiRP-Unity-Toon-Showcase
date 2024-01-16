@@ -3892,8 +3892,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   torchLight: {fileID: 8816658853875303372}
   torchPos: {fileID: 747126547}
-  onClip: {fileID: 8300000, guid: c56b8662ec531c34cb13581d8421bc72, type: 3}
-  offClip: {fileID: 8300000, guid: ed607d07c0ab4394682ff5123bbeb6cb, type: 3}
+  onClip: {fileID: 8300000, guid: 3398c7491e82e24489978843863348b6, type: 3}
+  offClip: {fileID: 8300000, guid: 8432015c54ebe1643a182484a3ad9a69, type: 3}
 --- !u!1 &1323899436
 GameObject:
   m_ObjectHideFlags: 0
@@ -9263,9 +9263,15 @@ MonoBehaviour:
   m_ShowToolkit: 0
   m_ShowCustomSorter: 0
   breakBeforeColorGrading: 0
-  m_BeforeTransparentBundles: []
-  m_BeforeStackBundles: []
-  m_AfterStackBundles: []
+  m_BeforeTransparentBundles:
+  - assemblyQualifiedName: EdgeDetect_BeforeTransparent, AGM.EdgeDetection, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  m_BeforeStackBundles:
+  - assemblyQualifiedName: EdgeDetect_BeforeStack, AGM.EdgeDetection, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  m_AfterStackBundles:
+  - assemblyQualifiedName: EdgeDetect_AfterStack, AGM.EdgeDetection, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!114 &1663364735
 MonoBehaviour:
   m_ObjectHideFlags: 0
