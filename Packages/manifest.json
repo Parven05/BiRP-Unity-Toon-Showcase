@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "com.agm.edge-detection": "https://github.com/AGM-GR/EdgeDetection.git#1.1.0",
+    "com.agm.edge-detection": "https://github.com/unitycoder/EdgeDetection.git",
     "com.unity.ai.navigation": "1.1.5",
     "com.unity.collab-proxy": "2.2.0",
     "com.unity.feature.development": "1.0.1",
