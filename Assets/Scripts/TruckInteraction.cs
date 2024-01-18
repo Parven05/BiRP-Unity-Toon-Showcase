@@ -7,6 +7,8 @@ public class TruckInteraction : MonoBehaviour,IInteractable
 {
     public static TruckInteraction Instance { get; private set; }
 
+    [SerializeField] private Transform topLandingTransform;
+
     public event Action<Transform> OnPlayerInteractedWithTruck;
     private void Awake()
     {
@@ -16,6 +18,11 @@ public class TruckInteraction : MonoBehaviour,IInteractable
     {
         Debug.Log("Truck Interacted");
         OnPlayerInteractedWithTruck?.Invoke(interactor);
+    }
+
+    public Transform GetTruckTopStandPos()
+    {
+        return topLandingTransform;
     }
 
    

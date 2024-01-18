@@ -13,5 +13,13 @@ public class TruckExitDetector : MonoBehaviour
                 fpsController.transform.SetParent(null);
             }
         }
+
+        if (other.gameObject.TryGetComponent(out RobotMovement robot))
+        {
+            if (robot.transform.parent == this.transform)
+            {
+                robot.transform.SetParent(null);
+            }
+        }
     }
 }
