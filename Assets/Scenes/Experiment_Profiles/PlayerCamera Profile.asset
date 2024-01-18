@@ -91,12 +91,12 @@ MonoBehaviour:
     value: 1
   mode:
     overrideState: 1
-    value: 4
-  sensitivityDepth:
-    overrideState: 0
     value: 1
+  sensitivityDepth:
+    overrideState: 1
+    value: 0.2
   sensitivityNormals:
-    overrideState: 0
+    overrideState: 1
     value: 1
   lumThreshold:
     overrideState: 1
