@@ -4,11 +4,10 @@ using UnityEngine.AI;
 
 public class TruckMovement : MonoBehaviour
 {
-    //[SerializeField] private List<Transform> labTransformsList;
     private Transform targetLabTransform = null;
     private NavMeshAgent agent;
     private bool isMoving;
-    //private bool hasReachedDestination = false;
+
 
     public static event Action OnTruckReachedTargetLab;
 
@@ -57,14 +56,6 @@ public class TruckMovement : MonoBehaviour
                 isMoving = true;
             }
         }
-
-        //if (!hasReachedDestination && !agent.pathPending && targetLabTransform != null)
-        //{
-        //    targetLabTransform = null;
-        //    Debug.Log("Lab Reached");
-        //    OnTruckReachedTargetLab?.Invoke();
-        //    hasReachedDestination = true;
-        //}
 
         if (isMoving && !agent.pathPending && targetLabTransform != null && agent.remainingDistance < 0.1f)
         {

@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -9,12 +10,68 @@ public class RobotMovement : MonoBehaviour
     private Transform targetObjectTransform = null;
     private NavMeshAgent agent;
     private float timer = 0;
-    private float timerMax = 1;
+    private float timerMax = 0.5f;
     private FollowObject followObject;
+    private RobotCollision robotCollision;
+    private Rigidbody rb;
+    private bool isCollapsed;
 
     private void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
+        robotCollision = GetComponent<RobotCollision>();
+        rb = GetComponent<Rigidbody>();
+    }
+    private void Start()
+    {
+        robotCollision.OnRobotGetShot += RobotCollision_OnRobotGetShot;
+    }
+    private void OnDisable()
+    {
+        robotCollision.OnRobotGetShot -= RobotCollision_OnRobotGetShot;
+    }
+
+    private void RobotCollision_OnRobotGetShot(object sender, EventArgs e)
+    {
+        //Vector3 targetToMove = GetNearDistance();
+        //agent.SetDestination(targetToMove);
+        if (!isCollapsed)
+        {
+            agent.enabled = false;
+            rb.isKinematic = false;
+            Vector3 direction = transform.position - FindObjectOfType<FirstPersonController>().transform.position;
+            rb.AddForce(direction * 0.5f + Vector3.up * 5f,ForceMode.Impulse);
+            rb.freezeRotation = false;
+            isCollapsed = true;
+
+            Invoke(nameof(Recovery), 2f);
+        }
+        //SetPlayerAsTargetToRobot();
+    }
+
+    private void Recovery()
+    {
+        rb.isKinematic = true;
+        rb.freezeRotation = true;
+        transform.DORotate(new Vector3(0, 87.65f, 0), 2f).SetEase(Ease.InBounce).OnComplete(() =>
+        {
+            agent.enabled = true;
+            isCollapsed = false;
+        });
+    }
+
+    private Vector3 GetNearDistance()
+    {
+        if(NavMesh.SamplePosition(transform.position,out NavMeshHit hit,10f,NavMesh.AllAreas))
+        {
+            return hit.position;
+        }
+        else
+        {
+            Debug.LogError("No Point Found");
+            return Vector3.zero;
+        }
+        
     }
 
     private void Update()
@@ -34,7 +91,7 @@ public class RobotMovement : MonoBehaviour
                 timer = 0;
             }
 
-            if (agent.remainingDistance < 2f)
+            if (agent.remainingDistance < 3f)
             {
                 Debug.Log("target Object Reached");
                 SetReachedTargetAction(targetObjectTransform.GetComponent<TruckInteraction>());
