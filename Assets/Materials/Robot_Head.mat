@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Robot_Toon
+  m_Name: Robot_Head
   m_Shader: {fileID: 4800000, guid: e344358da9bef1244bc7610597f116f6, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -29,7 +29,7 @@ Material:
   - _ZTEST_LESSEQUAL
   - _ZWRITE_ON
   m_LightmapFlags: 4
-  m_EnableInstancingVariants: 1
+  m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
   stringTagMap: {}
@@ -129,7 +129,7 @@ Material:
     - _OcclusionStrength: 1
     - _Outline: 1
     - _OutlineMaskAlphaClip: 0.5
-    - _OutlineSize: 0.2
+    - _OutlineSize: 1
     - _Parallax: 0.02
     - _PointSpotLightBoost: 10
     - _SmoothnessStrength: 1
