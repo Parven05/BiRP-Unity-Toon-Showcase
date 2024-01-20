@@ -7,6 +7,7 @@ using UnityEngine.AI;
 
 public class RobotMovement : MonoBehaviour
 {
+    [SerializeField] private ParticleSystem movementDustPartcle;
     private Transform targetObjectTransform = null;
     private NavMeshAgent agent;
     private float timer = 0;
@@ -79,7 +80,21 @@ public class RobotMovement : MonoBehaviour
         if (agent == null) Debug.LogError("No Agent Added In Robot");
         if (targetObjectTransform == null) return;
 
-       
+        float agentSpeed = agent.velocity.magnitude;
+        if (agentSpeed > 0)
+        {
+            if (!movementDustPartcle.isPlaying)
+            {
+                movementDustPartcle.Play();
+            }
+        }
+        else
+        {
+            if (movementDustPartcle.isPlaying)
+            {
+                movementDustPartcle.Stop();
+            }
+        }
 
         if (followObject == FollowObject.Truck && agent.isActiveAndEnabled && !agent.pathPending)
         {
@@ -114,6 +129,7 @@ public class RobotMovement : MonoBehaviour
                 Debug.Log("Player Reached");
             }
         }
+
     }
 
 
