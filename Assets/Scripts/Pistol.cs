@@ -23,6 +23,7 @@ public class Pistol : MonoBehaviour
     //Graphics
     public GameObject bulletHoleGraphic;
     public ParticleSystem shootParticle;
+    public ParticleSystem shootParticleVfx;
     //public CamShake camShake;
     public float camShakeMagnitude, camShakeDuration;
     public TextMeshProUGUI text;
@@ -86,7 +87,8 @@ public class Pistol : MonoBehaviour
         Instantiate(bulletHoleGraphic, rayHit.point, Quaternion.Euler(0, 180, 0));
         //Instantiate(muzzleFlash, attackPoint.position, Quaternion.identity);
         shootParticle.Emit(1);
-
+        shootParticleVfx.Play();
+        
         bulletsLeft--;
         bulletsShot--;
 

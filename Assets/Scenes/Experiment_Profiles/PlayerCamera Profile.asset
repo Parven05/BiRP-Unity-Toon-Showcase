@@ -103,7 +103,7 @@ MonoBehaviour:
     value: 0.06
   edgeExp:
     overrideState: 1
-    value: 1.5
+    value: 2
   sampleDist:
     overrideState: 1
     value: 1
