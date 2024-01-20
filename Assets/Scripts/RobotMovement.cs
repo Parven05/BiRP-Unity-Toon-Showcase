@@ -14,6 +14,7 @@ public class RobotMovement : MonoBehaviour
     private float timerMax = 0.5f;
     private FollowObject followObject;
     private RobotCollision robotCollision;
+    private RobotIK robotIK;
     private Rigidbody rb;
     private bool isCollapsed;
 
@@ -21,6 +22,7 @@ public class RobotMovement : MonoBehaviour
     {
         agent = GetComponent<NavMeshAgent>();
         robotCollision = GetComponent<RobotCollision>();
+        robotIK = GetComponent<RobotIK>();
         rb = GetComponent<Rigidbody>();
     }
     private void Start()
@@ -61,9 +63,9 @@ public class RobotMovement : MonoBehaviour
         });
     }
 
-    private Vector3 GetNearDistance()
+    private Vector3 GetNearPoint(Transform orginPoint,float radius)
     {
-        if(NavMesh.SamplePosition(transform.position,out NavMeshHit hit,10f,NavMesh.AllAreas))
+        if(NavMesh.SamplePosition(orginPoint.position,out NavMeshHit hit,radius,NavMesh.AllAreas))
         {
             return hit.position;
         }
@@ -130,6 +132,22 @@ public class RobotMovement : MonoBehaviour
             }
         }
 
+        if (followObject == FollowObject.TruckGun && agent.isActiveAndEnabled && !agent.pathPending)
+        {
+            timer += Time.deltaTime;
+
+            if (timer > timerMax)
+            {
+                agent.SetDestination(targetObjectTransform.position);
+                timer = 0;
+            }
+
+            if (agent.remainingDistance < 0.1f)
+            {
+                Debug.Log("Player Reached Gun");
+                robotIK.SetInteractHandsTo(MachineGun.Instance.GetLeftHandIkPoint(),MachineGun.Instance.GetRightHandIkPoint());
+            }
+        }
     }
 
 
@@ -167,8 +185,18 @@ public class RobotMovement : MonoBehaviour
         agent.SetDestination(targetObjectTransform.position);
         followObject = FollowObject.Null;
     }
+
+    public void SetTargetTruckGunPosition()
+    {
+        Transform tr = FindObjectOfType<MachineGun>().GetOperatorStandPoint();
+        Vector3 randomPoint = GetNearPoint(tr, 1f);
+        tr.position = randomPoint;
+        targetObjectTransform = tr;
+        agent.SetDestination(targetObjectTransform.position);
+        followObject = FollowObject.TruckGun;
+    }
 }
 
 public enum FollowObject { 
-    Player,Truck,Null
+    Player,Truck,TruckGun,Null
 }

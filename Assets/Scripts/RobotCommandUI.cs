@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,6 +11,7 @@ public class RobotCommandUI : MonoBehaviour
     [SerializeField] private Button getInTruckButton;
     [SerializeField] private Button followMeButton;
     [SerializeField] private Button stayHereButton;
+    [SerializeField] private Button defenceTruckButton;
 
     private void Awake()
     {
@@ -29,6 +31,11 @@ public class RobotCommandUI : MonoBehaviour
         {
             StayHere();
         });
+
+        defenceTruckButton.onClick.AddListener(() =>
+        {
+            DefenceTruck();
+        });
     }
 
     private void Update()
@@ -39,12 +46,25 @@ public class RobotCommandUI : MonoBehaviour
         }
 
     }
+
+    private void DefenceTruck()
+    {
+        robotMovement.SetTargetTruckGunPosition();
+        defenceTruckButton.interactable = false;
+        followMeButton.interactable = true;
+        getInTruckButton.interactable = true;
+        stayHereButton.interactable = true;
+
+        CloseUI();
+    }
     private void FollowMe()
     {
         robotMovement.SetPlayerAsTargetToRobot();
         followMeButton.interactable = false;
         getInTruckButton.interactable = true;
         stayHereButton.interactable = true;
+        defenceTruckButton.interactable = true;
+
         CloseUI();
     }
     private void GetInTruck()
@@ -53,6 +73,8 @@ public class RobotCommandUI : MonoBehaviour
         followMeButton.interactable = true;
         getInTruckButton.interactable = false;
         stayHereButton.interactable = true;
+        defenceTruckButton.interactable = true;
+
         CloseUI();
     }
     private void StayHere()
@@ -62,6 +84,8 @@ public class RobotCommandUI : MonoBehaviour
         followMeButton.interactable = true;
         getInTruckButton.interactable = true;
         stayHereButton.interactable= false;
+        defenceTruckButton.interactable = true;
+
         CloseUI();
     }
 
