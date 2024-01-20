@@ -30,12 +30,13 @@ public class Pistol : MonoBehaviour
     public AudioClip shootAudioClip;
     private Animator animator;
 
-
+    private Mag mag;
     private void Awake()
     {
         bulletsLeft = magazineSize;
         readyToShoot = true;
         animator = GetComponent<Animator>();
+        mag = GetComponentInChildren<Mag>();
     }
     private void Update()
     {
@@ -49,7 +50,11 @@ public class Pistol : MonoBehaviour
         if (allowButtonHold) shooting = Input.GetKey(KeyCode.Mouse0);
         else shooting = Input.GetKeyDown(KeyCode.Mouse0);
 
-        if (Input.GetKeyDown(KeyCode.R) && bulletsLeft < magazineSize && !reloading) Reload();
+        if (Input.GetKeyDown(KeyCode.R) && bulletsLeft < magazineSize && !reloading)
+        {
+            /*Reload()*/
+            animator.SetTrigger("Reload");
+        }
 
         //Shoot
         if (readyToShoot && shooting && !reloading && bulletsLeft > 0)
@@ -73,9 +78,18 @@ public class Pistol : MonoBehaviour
         if (Physics.Raycast(fpsCam.transform.position, direction, out rayHit, range, whatIsEnemy))
         {
             Debug.Log(rayHit.collider.name);
-
-            if (rayHit.collider.TryGetComponent(out IDamagable damagable))
-                damagable.TakeDamage(damage);
+            Rigidbody hitRb = null;
+            if (rayHit.collider.TryGetComponent(out IDamagable damagable) ||
+                rayHit.collider.TryGetComponent(out hitRb))
+            {
+                damagable?.TakeDamage(damage);
+                
+                if(hitRb != null)
+                {
+                    Vector3 dir = (rayHit.point - hitRb.position).normalized;
+                    hitRb.AddForce(dir * 3, ForceMode.Impulse);
+                }
+            }
         }
 
         //ShakeCamera
@@ -101,8 +115,9 @@ public class Pistol : MonoBehaviour
     {
         readyToShoot = true;
     }
-    private void Reload()
+    public void Reload()
     {
+        mag.Eject();
         reloading = true;
         Invoke("ReloadFinished", reloadTime);
     }
