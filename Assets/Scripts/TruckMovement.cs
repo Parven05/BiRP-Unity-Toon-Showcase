@@ -40,7 +40,7 @@ public class TruckMovement : MonoBehaviour
     {
         this.targetLabTransform = labAddress.labLocatedPosition;
         interactor.transform.SetParent(this.transform);
-        interactor.localPosition = Vector3.zero + Vector3.up * 0.9f;
+        //interactor.localPosition = Vector3.zero + Vector3.up * 0.9f;
     }
 
     private void Update()

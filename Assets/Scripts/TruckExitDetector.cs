@@ -4,6 +4,24 @@ using UnityEngine;
 
 public class TruckExitDetector : MonoBehaviour
 {
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.TryGetComponent(out FirstPersonController fpsController))
+        {
+            if (fpsController.transform.parent == this.transform)
+            {
+                fpsController.transform.SetParent(this.transform);
+            }
+        }
+
+        if (other.gameObject.TryGetComponent(out RobotMovement robot))
+        {
+            if (robot.transform.parent == this.transform)
+            {
+                robot.transform.SetParent(this.transform);
+            }
+        }
+    }
     private void OnTriggerExit(Collider other)
     {
         if(other.gameObject.TryGetComponent(out FirstPersonController fpsController))
