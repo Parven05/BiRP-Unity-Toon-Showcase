@@ -29,7 +29,6 @@ public class Pistol : MonoBehaviour
     public TextMeshProUGUI text;
     public AudioClip shootAudioClip;
     public AudioClip impactAudioClip;
-    public Transform remoteTransform;
     private Animator animator;
 
     private Mag mag;
@@ -59,7 +58,7 @@ public class Pistol : MonoBehaviour
         }
 
         //Shoot
-        if (readyToShoot && shooting && !reloading && bulletsLeft > 0 && !remoteTransform.gameObject.activeSelf)
+        if (readyToShoot && shooting && !reloading && bulletsLeft > 0)
         {
             bulletsShot = bulletsPerTap;
             Shoot();

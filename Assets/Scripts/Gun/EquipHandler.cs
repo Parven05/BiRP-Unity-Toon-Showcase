@@ -8,25 +8,19 @@ public class EquipHandler : MonoBehaviour
     [SerializeField] private Transform remoteTransform;
     [SerializeField] private Transform hammerTransform;
 
-    private void Start()
-    {
-        pistolTransform.gameObject.SetActive(false);
-        remoteTransform.gameObject.SetActive(false);
-        hammerTransform.gameObject.SetActive(false);
-    }
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Q))
+        if(Input.GetKeyDown(KeyCode.Alpha1))
         {
             pistolTransform.gameObject.SetActive(!pistolTransform.gameObject.activeSelf);
         }
 
-        if (Input.GetKeyDown(KeyCode.T))
+        if (Input.GetKeyDown(KeyCode.Alpha2))
         {
             remoteTransform.gameObject.SetActive(!remoteTransform.gameObject.activeSelf);
         }
 
-        if (Input.GetKeyDown(KeyCode.H))
+        if (Input.GetKeyDown(KeyCode.Alpha3))
         {
             hammerTransform.gameObject.SetActive(!hammerTransform.gameObject.activeSelf);
         }
