@@ -16,6 +16,7 @@ public class Remote : MonoBehaviour
 
     private Outline outlineSelected;
     private bool hasClicked;
+    private bool isInRange;
 
     private void Awake()
     {
@@ -28,15 +29,28 @@ public class Remote : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.None;
 
-        Color targetColor = Vector3.Distance(remoteTransform.position, robotTransform.position) <= remoteCoverageRadius
-            ? Color.green
-            : Color.red;
+        isInRange = Vector3.Distance(remoteTransform.position, robotTransform.position) <= remoteCoverageRadius;
+        if (isInRange)
+        {
+            if(remoteScreenMaterial.color != Color.green)
+            {
+               remoteScreenMaterial.color = Color.green;
+            }
+            textMeshIndigator.text = "In Range";
+        }
+        else
+        {
+            if (remoteScreenMaterial.color != Color.red)
+            {
+                remoteScreenMaterial.color = Color.red;
+            }
+            textMeshIndigator.text = "Not InRange";
+        }
 
-        textMeshIndigator.text = targetColor == Color.green ? "In Range" : "Not InRange";
-
-        if (remoteScreenMaterial.GetColor("_Color") == targetColor) return;
-        remoteScreenMaterial.SetColor("_Color", targetColor);
-
+        if(outlineSelected != null)
+        {
+            outlineSelected.OutlineColor = isInRange ? Color.green : Color.red;
+        }
 
     }
 
@@ -47,7 +61,10 @@ public class Remote : MonoBehaviour
 
     private void HandleObjectClick(GameObject clickedObject)
     {
-        Debug.Log($"Clicked {clickedObject.name}");
+        if(isInRange)
+            Debug.Log($"Clicked {clickedObject.name} And Robot In Range");
+        else
+            Debug.Log($"Clicked {clickedObject.name} And Robot Not In Range");
     }
 
     private void FixedUpdate()
@@ -60,9 +77,8 @@ public class Remote : MonoBehaviour
                 if (outlineSelected == null)
                 {
                     outlineSelected = hitInfo.collider.gameObject.GetComponent<Outline>();
-                    outlineSelected.OutlineColor = Color.green;
                 }
-
+             
                 // Check if the object implements the IPointerClickHandler interface
                 if (hitInfo.collider.gameObject.GetComponent<IPointerClickHandler>() != null)
                 {
@@ -75,6 +91,7 @@ public class Remote : MonoBehaviour
                     }
                 }
             }
+ 
         }
         else
         {
