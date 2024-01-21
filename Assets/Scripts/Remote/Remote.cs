@@ -62,9 +62,14 @@ public class Remote : MonoBehaviour
     private void HandleObjectClick(GameObject clickedObject)
     {
         if(isInRange)
-            Debug.Log($"Clicked {clickedObject.name} And Robot In Range");
+        {
+            clickedObject.GetComponent<RemoteButton>().SetButtonPerformed();
+        }
         else
-            Debug.Log($"Clicked {clickedObject.name} And Robot Not In Range");
+        {
+            clickedObject.GetComponent<RemoteButton>().SetButtonPerformedWithError();
+        }
+            
     }
 
     private void FixedUpdate()

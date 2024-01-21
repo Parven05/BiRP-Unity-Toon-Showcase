@@ -7,6 +7,11 @@ public class EquipHandler : MonoBehaviour
     [SerializeField] private Transform pistolTransform;
     [SerializeField] private Transform remoteTransform;
 
+    private void Start()
+    {
+        pistolTransform.gameObject.SetActive(false);
+        remoteTransform.gameObject.SetActive(false);
+    }
     private void Update()
     {
         if(Input.GetKeyDown(KeyCode.Q))
