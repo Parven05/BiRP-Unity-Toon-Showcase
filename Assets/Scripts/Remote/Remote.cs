@@ -15,7 +15,7 @@ public class Remote : MonoBehaviour
 
     private Outline outlineSelected;
     private bool isInRange;
-    private RemoteButton[] interactableObjects;
+    [SerializeField] private RemoteButton[] interactableObjects;
     private int selectedIndex;
 
     private void Awake()
@@ -23,16 +23,14 @@ public class Remote : MonoBehaviour
         Instance = this;
         robotTransform = FindObjectOfType<RobotMovement>().transform;
         remoteTransform = FindObjectOfType<FirstPersonController>().transform;
-        interactableObjects = FindObjectsOfType<RemoteButton>(); // Adjust the tag accordingly
         selectedIndex = 0;
         UpdateOutlineSelected();
     }
 
     private void Update()
     {
-        Cursor.lockState = CursorLockMode.None;
-
         isInRange = Vector3.Distance(remoteTransform.position, robotTransform.position) <= remoteCoverageRadius;
+
         if (isInRange)
         {
             if (remoteScreenMaterial.color != Color.green)
@@ -58,13 +56,13 @@ public class Remote : MonoBehaviour
         // Check for keyboard input
         if (isInRange)
         {
-            if (Input.GetKeyDown(KeyCode.W))
-            {
-                ChangeSelectedIndex(1);
-            }
-            else if (Input.GetKeyDown(KeyCode.S))
+            if (Input.GetKeyDown(KeyCode.Q))
             {
                 ChangeSelectedIndex(-1);
+            }
+            else if (Input.GetKeyDown(KeyCode.E))
+            {
+                ChangeSelectedIndex(1);
             }
 
             if (Input.GetKeyDown(KeyCode.Return))
@@ -74,6 +72,8 @@ public class Remote : MonoBehaviour
             }
         }
     }
+
+
 
     private void OnDisable()
     {
@@ -85,6 +85,17 @@ public class Remote : MonoBehaviour
         if (isInRange && clickedObject != null)
         {
             ExecuteEvents.Execute(clickedObject, new PointerEventData(EventSystem.current), ExecuteEvents.pointerClickHandler);
+            if(clickedObject.TryGetComponent(out RemoteButton remoteButton))
+            {
+                remoteButton.SetButtonPerformed();
+            }
+        }
+        else
+        {
+            if (clickedObject.TryGetComponent(out RemoteButton remoteButton))
+            {
+                remoteButton.SetButtonPerformedWithError();
+            }
         }
     }
 
