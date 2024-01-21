@@ -29,6 +29,8 @@ public class Pistol : MonoBehaviour
     public TextMeshProUGUI text;
     public AudioClip shootAudioClip;
     public AudioClip impactAudioClip;
+    public AudioClip ammoEmpty;
+    public AudioClip reloadPistol;
     private Animator animator;
 
     private Mag mag;
@@ -54,6 +56,7 @@ public class Pistol : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.R) && bulletsLeft < magazineSize && !reloading)
         {
             /*Reload()*/
+            AudioSource.PlayClipAtPoint(reloadPistol, transform.position, 1f);
             animator.SetTrigger("Reload");
         }
 
@@ -62,6 +65,11 @@ public class Pistol : MonoBehaviour
         {
             bulletsShot = bulletsPerTap;
             Shoot();
+        }
+
+        if(bulletsLeft <= 0 && shooting)
+        {
+            AudioSource.PlayClipAtPoint(ammoEmpty, transform.position, 1f);
         }
     }
     private void Shoot()

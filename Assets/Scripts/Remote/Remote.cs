@@ -1,5 +1,4 @@
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -15,14 +14,18 @@ public class Remote : MonoBehaviour
     [SerializeField] private TextMeshPro textMeshIndigator;
 
     private Outline outlineSelected;
-    private bool hasClicked;
     private bool isInRange;
+    private RemoteButton[] interactableObjects;
+    private int selectedIndex;
 
     private void Awake()
     {
         Instance = this;
         robotTransform = FindObjectOfType<RobotMovement>().transform;
         remoteTransform = FindObjectOfType<FirstPersonController>().transform;
+        interactableObjects = FindObjectsOfType<RemoteButton>(); // Adjust the tag accordingly
+        selectedIndex = 0;
+        UpdateOutlineSelected();
     }
 
     private void Update()
@@ -32,9 +35,9 @@ public class Remote : MonoBehaviour
         isInRange = Vector3.Distance(remoteTransform.position, robotTransform.position) <= remoteCoverageRadius;
         if (isInRange)
         {
-            if(remoteScreenMaterial.color != Color.green)
+            if (remoteScreenMaterial.color != Color.green)
             {
-               remoteScreenMaterial.color = Color.green;
+                remoteScreenMaterial.color = Color.green;
             }
             textMeshIndigator.text = "In Range";
         }
@@ -44,14 +47,32 @@ public class Remote : MonoBehaviour
             {
                 remoteScreenMaterial.color = Color.red;
             }
-            textMeshIndigator.text = "Not InRange";
+            textMeshIndigator.text = "Not In Range";
         }
 
-        if(outlineSelected != null)
+        if (outlineSelected != null)
         {
             outlineSelected.OutlineColor = isInRange ? Color.green : Color.red;
         }
 
+        // Check for keyboard input
+        if (isInRange)
+        {
+            if (Input.GetKeyDown(KeyCode.W))
+            {
+                ChangeSelectedIndex(1);
+            }
+            else if (Input.GetKeyDown(KeyCode.S))
+            {
+                ChangeSelectedIndex(-1);
+            }
+
+            if (Input.GetKeyDown(KeyCode.Return))
+            {
+                // Simulate a click on the currently selected object
+                HandleObjectClick(interactableObjects[selectedIndex].gameObject);
+            }
+        }
     }
 
     private void OnDisable()
@@ -61,53 +82,25 @@ public class Remote : MonoBehaviour
 
     private void HandleObjectClick(GameObject clickedObject)
     {
-        if(isInRange)
+        if (isInRange && clickedObject != null)
         {
-            clickedObject.GetComponent<RemoteButton>().SetButtonPerformed();
+            ExecuteEvents.Execute(clickedObject, new PointerEventData(EventSystem.current), ExecuteEvents.pointerClickHandler);
         }
-        else
-        {
-            clickedObject.GetComponent<RemoteButton>().SetButtonPerformedWithError();
-        }
-            
     }
 
-    private void FixedUpdate()
+    private void UpdateOutlineSelected()
     {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(ray, out RaycastHit hitInfo, 3f, remoteInteractableLayer))
+        if (interactableObjects.Length > 0)
         {
-            if (hitInfo.collider != null)
-            {
-                if (outlineSelected == null)
-                {
-                    outlineSelected = hitInfo.collider.gameObject.GetComponent<Outline>();
-                }
-             
-                // Check if the object implements the IPointerClickHandler interface
-                if (hitInfo.collider.gameObject.GetComponent<IPointerClickHandler>() != null)
-                {
-                    // Execute the OnPointerDown method when the object is clicked
-                    if (Input.GetMouseButtonDown(0) && !hasClicked)
-                    {
-                        ExecuteEvents.Execute(hitInfo.collider.gameObject, new PointerEventData(EventSystem.current), ExecuteEvents.pointerDownHandler);
-                        HandleObjectClick(hitInfo.collider.gameObject);
-                        hasClicked = true;
-                    }
-                }
-            }
- 
+            outlineSelected = interactableObjects[selectedIndex].GetComponent<Outline>();
+            outlineSelected.OutlineColor = Color.green;
         }
-        else
-        {
-            if (outlineSelected != null)
-            {
-                outlineSelected.OutlineColor = Color.white;
-                outlineSelected = null;
-            }
+    }
 
-            // Reset the hasClicked flag when not over an interactable object
-            hasClicked = false;
-        }
+    private void ChangeSelectedIndex(int change)
+    {
+        outlineSelected.OutlineColor = Color.white;
+        selectedIndex = (selectedIndex + change + interactableObjects.Length) % interactableObjects.Length;
+        UpdateOutlineSelected();
     }
 }
