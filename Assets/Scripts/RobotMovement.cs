@@ -141,11 +141,12 @@ public class RobotMovement : MonoBehaviour
                 agent.SetDestination(targetObjectTransform.position);
                 timer = 0;
             }
-
-            if (agent.remainingDistance < 0.1f)
+            //Debug.Log($"Player Reached Gun to Robo Dis {agent.remainingDistance}");
+            if (agent.remainingDistance < 3.8f)
             {
                 Debug.Log("Player Reached Gun");
                 robotIK.SetInteractHandsTo(MachineGun.Instance.GetLeftHandIkPoint(),MachineGun.Instance.GetRightHandIkPoint());
+                transform.localEulerAngles = new Vector3(0,223f,0);
             }
         }
     }
@@ -156,7 +157,7 @@ public class RobotMovement : MonoBehaviour
         if(truckInteraction != null)
         {
             agent.enabled = false;
-            transform.SetParent(truckInteraction.GetTruckTopStandPos());
+            transform.SetParent(truckInteraction.GetTruckStandPos());
             transform.localPosition = Vector3.zero;
         }
     }
@@ -188,10 +189,7 @@ public class RobotMovement : MonoBehaviour
 
     public void SetTargetTruckGunPosition()
     {
-        Transform tr = FindObjectOfType<MachineGun>().GetOperatorStandPoint();
-        Vector3 randomPoint = GetNearPoint(tr, 1f);
-        tr.position = randomPoint;
-        targetObjectTransform = tr;
+        targetObjectTransform = FindObjectOfType<TruckInteraction>().transform;
         agent.SetDestination(targetObjectTransform.position);
         followObject = FollowObject.TruckGun;
     }

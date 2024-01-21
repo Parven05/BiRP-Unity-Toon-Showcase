@@ -20,7 +20,7 @@ public class TruckInteraction : MonoBehaviour,IInteractable
         OnPlayerInteractedWithTruck?.Invoke(interactor);
     }
 
-    public Transform GetTruckTopStandPos()
+    public Transform GetTruckStandPos()
     {
         return topLandingTransform;
     }

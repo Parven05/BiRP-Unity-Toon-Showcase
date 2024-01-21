@@ -88,7 +88,7 @@ public class Pistol : MonoBehaviour
                 if(hitRb != null)
                 {
                     Vector3 dir = (rayHit.point - hitRb.position).normalized;
-                    hitRb.AddForce(dir * 3, ForceMode.Impulse);
+                    hitRb.AddForce(-dir * 3, ForceMode.Impulse);
                 }
             }
         }

@@ -9,10 +9,6 @@ public class Mag : MonoBehaviour
     [ContextMenu("Test Eject")]
     public void Eject()
     {
-        //transform.SetParent(null);
-        //rb.isKinematic = false;
-        //rb.AddForce(-transform.up * 0.5f,ForceMode.Impulse);
-        //Destroy(rb.gameObject,10f);
 
         var magSpawned = Instantiate(dummyMag, transform);
         magSpawned.transform.localPosition = Vector3.zero;
@@ -20,7 +16,7 @@ public class Mag : MonoBehaviour
 
         magSpawned.transform.SetParent(null);
 
-        magSpawned.GetComponent<Rigidbody>().AddForce(-transform.up * 0.5f, ForceMode.Impulse);
+        magSpawned.GetComponent<Rigidbody>().AddForce(Vector3.down * 0.5f, ForceMode.Impulse);
         Destroy(magSpawned, 10f);
     }
 }
