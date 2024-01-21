@@ -28,6 +28,7 @@ public class Pistol : MonoBehaviour
     public float camShakeMagnitude, camShakeDuration;
     public TextMeshProUGUI text;
     public AudioClip shootAudioClip;
+    public AudioClip impactAudioClip;
     public Transform remoteTransform;
     private Animator animator;
 
@@ -100,6 +101,7 @@ public class Pistol : MonoBehaviour
         animator.SetTrigger("IsShoot");
         AudioSource.PlayClipAtPoint(shootAudioClip, transform.position, 1f);
         Instantiate(bulletHoleGraphic, rayHit.point, Quaternion.Euler(0, 180, 0));
+        AudioSource.PlayClipAtPoint(impactAudioClip, transform.position, 1f);
         //Instantiate(muzzleFlash, attackPoint.position, Quaternion.identity);
         shootParticle.Emit(1);
         shootParticleVfx.Play();
