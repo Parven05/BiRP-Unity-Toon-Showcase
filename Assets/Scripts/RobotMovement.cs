@@ -54,12 +54,12 @@ public class RobotMovement : MonoBehaviour
 
     private void Recovery()
     {
-        rb.isKinematic = true;
-        rb.freezeRotation = true;
-        transform.DORotate(new Vector3(0, 87.65f, 0), 2f).SetEase(Ease.InBounce).OnComplete(() =>
+        transform.DORotate(new Vector3(0, 0, 0), 2f).SetEase(Ease.InBounce).OnComplete(() =>
         {
             agent.enabled = true;
             isCollapsed = false;
+            rb.isKinematic = true;
+            rb.freezeRotation = true;
         });
     }
 
@@ -80,23 +80,26 @@ public class RobotMovement : MonoBehaviour
     private void Update()
     {
         if (agent == null) Debug.LogError("No Agent Added In Robot");
-        if (targetObjectTransform == null) return;
 
         float agentSpeed = agent.velocity.magnitude;
         if (agentSpeed > 0)
         {
-            if (!movementDustPartcle.isPlaying)
+            if (!movementDustPartcle.gameObject.activeSelf)
             {
-                movementDustPartcle.Play();
+                movementDustPartcle.gameObject.SetActive(true);
             }
         }
         else
         {
-            if (movementDustPartcle.isPlaying)
+            if (movementDustPartcle.gameObject.activeSelf)
             {
-                movementDustPartcle.Stop();
+                movementDustPartcle.gameObject.SetActive(false);
             }
         }
+
+        if (targetObjectTransform == null) return;
+
+        
 
         if (followObject == FollowObject.Truck && agent.isActiveAndEnabled && !agent.pathPending)
         {
