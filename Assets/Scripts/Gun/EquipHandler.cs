@@ -1,6 +1,4 @@
 using DG.Tweening;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class EquipHandler : MonoBehaviour
@@ -27,33 +25,53 @@ public class EquipHandler : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.Alpha1))
         {
-            //pistolTransform.gameObject.SetActive(!pistolTransform.gameObject.activeSelf);
             isActivePistol = !isActivePistol;
             if (isActivePistol)
+            {
+                isActiveRemote = false;
+                isActiveHammer = false;
+                SetActiveRemote(false);
+                SetActiveHammer(false);
                 SetActivePistol(true);
+            } 
             else
+            {
                 SetActivePistol(false);
+            }  
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {
-            //remoteTransform.gameObject.SetActive(!remoteTransform.gameObject.activeSelf);
-
             isActiveRemote = !isActiveRemote;
             if (isActiveRemote)
+            {
+                isActiveHammer = false;
+                isActivePistol = false;
+                SetActiveHammer(false);
+                SetActivePistol(false);
                 SetActiveRemote(true);
+            }   
             else
+            {
                 SetActiveRemote(false);
+            }
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha3))
         {
             isActiveHammer = !isActiveHammer;
-            //hammerTransform.gameObject.SetActive(!hammerTransform.gameObject.activeSelf);
             if (isActiveHammer)
+            {
+                isActivePistol = false;
+                isActiveRemote = false;
+                SetActivePistol(false);
+                SetActiveRemote(false);
                 SetActiveHammer(true);
+            } 
             else
+            {
                 SetActiveHammer(false);
+            }   
         }
     }
 
