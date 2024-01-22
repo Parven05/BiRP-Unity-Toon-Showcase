@@ -39,6 +39,9 @@ public class RobotInstructionReceiver : MonoBehaviour
             case "Stop Move":
                 StopMove(false);
                 break;
+            case "Search Bodies":
+                SearchBodies(false);
+                break;
         }
     }
 
@@ -58,6 +61,9 @@ public class RobotInstructionReceiver : MonoBehaviour
             case "Stop Move":
                 StopMove(true);
                 break;
+            case "Search Bodies":
+                SearchBodies(true);
+                break;
         }
     }
 
@@ -65,6 +71,11 @@ public class RobotInstructionReceiver : MonoBehaviour
     {
         if (inRadiusStatus) robotMovement.SetTargetTruckGunPosition();
         else Debug.Log("OOps Robot Cant Perfom DEFENCE TRUCK Not In Range");
+    }
+    private void SearchBodies(bool inRadiusStatus)
+    {
+        if (inRadiusStatus) robotMovement.SetSearchForBodies();
+        else Debug.Log("OOps Robot Cant Perfom Search For Bodies Not In Range");
     }
     private void FollowMe(bool inRadiusStatus)
     {

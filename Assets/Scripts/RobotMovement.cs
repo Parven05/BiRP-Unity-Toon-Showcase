@@ -7,6 +7,7 @@ using UnityEngine.AI;
 
 public class RobotMovement : MonoBehaviour
 {
+    [SerializeField] private float searchRadius = 20f;
     [SerializeField] private ParticleSystem movementDustPartcle;
     private Transform targetObjectTransform = null;
     private NavMeshAgent agent;
@@ -17,6 +18,8 @@ public class RobotMovement : MonoBehaviour
     private RobotIK robotIK;
     private Rigidbody rb;
     private bool isCollapsed;
+
+    private Vector3 randomPos;
 
     private void Awake()
     {
@@ -63,9 +66,14 @@ public class RobotMovement : MonoBehaviour
         });
     }
 
-    private Vector3 GetNearPoint(Transform orginPoint,float radius)
+    private Vector3 GetNearPoint(Transform originPoint, float radius)
     {
-        if(NavMesh.SamplePosition(orginPoint.position,out NavMeshHit hit,radius,NavMesh.AllAreas))
+        NavMeshHit hit;
+        Vector3 randomDirection = UnityEngine.Random.insideUnitSphere * radius;
+        randomDirection += originPoint.position;
+        randomDirection.y = transform.position.y;
+
+        if (NavMesh.SamplePosition(randomDirection, out hit, radius, NavMesh.AllAreas))
         {
             return hit.position;
         }
@@ -74,8 +82,8 @@ public class RobotMovement : MonoBehaviour
             Debug.LogError("No Point Found");
             return Vector3.zero;
         }
-        
     }
+
 
     private void Update()
     {
@@ -94,6 +102,25 @@ public class RobotMovement : MonoBehaviour
             if (movementDustPartcle.gameObject.activeSelf)
             {
                 movementDustPartcle.gameObject.SetActive(false);
+            }
+        }
+
+        if (followObject == FollowObject.SearchBodies && agent.isActiveAndEnabled && !agent.pathPending)
+        {
+            timer += Time.deltaTime;
+
+            if (timer > timerMax)
+            {
+                agent.SetDestination(randomPos);
+                timer = 0;
+            }
+
+            Debug.Log($"Robo to body Dis {agent.remainingDistance}");
+            if (agent.remainingDistance < 3f)
+            {
+                Debug.Log("Reached Point");
+                randomPos = GetNearPoint(transform, searchRadius);
+                agent.SetDestination(randomPos);
             }
         }
 
@@ -152,6 +179,8 @@ public class RobotMovement : MonoBehaviour
                 transform.localEulerAngles = new Vector3(0,223f,0);
             }
         }
+
+      
     }
 
 
@@ -196,8 +225,21 @@ public class RobotMovement : MonoBehaviour
         agent.SetDestination(targetObjectTransform.position);
         followObject = FollowObject.TruckGun;
     }
+
+    public void SetSearchForBodies()
+    {
+        Debug.LogWarning("Searching AI Behaviour Not Yet Implemented");
+        randomPos = GetNearPoint(transform, searchRadius);
+        agent.SetDestination(randomPos);
+        followObject = FollowObject.SearchBodies;
+    }
+
+    public void SetPlayerAsTargetToRobotAndStop()
+    {
+        SetPlayerAsTargetToRobot();
+    }
 }
 
 public enum FollowObject { 
-    Player,Truck,TruckGun,Null
+    Player,Truck,TruckGun,SearchBodies,Null
 }
