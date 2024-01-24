@@ -71,7 +71,7 @@ public class Interactor : MonoBehaviour
                 if (collider.gameObject.TryGetComponent(out IInteractable interactable))
                 {
                     currentInteractable = interactable;
-                    if(currentInteractable is TruckInteraction) interactUI.Show();
+                    if(currentInteractable is RvInteraction) interactUI.Show();
                 }
             }
         }

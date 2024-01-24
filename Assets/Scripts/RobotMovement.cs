@@ -142,7 +142,7 @@ public class RobotMovement : MonoBehaviour
             if (agent.remainingDistance < 3f)
             {
                 Debug.Log("target Object Reached");
-                SetReachedTargetAction(targetObjectTransform.GetComponent<TruckInteraction>());
+                SetReachedTargetAction(targetObjectTransform.GetComponent<RvInteraction>());
                 targetObjectTransform = null;
             }
         }
@@ -200,7 +200,7 @@ public class RobotMovement : MonoBehaviour
     }
 
 
-    private void SetReachedTargetAction(TruckInteraction truckInteraction)
+    private void SetReachedTargetAction(RvInteraction truckInteraction)
     {
         if(truckInteraction != null)
         {
@@ -222,7 +222,7 @@ public class RobotMovement : MonoBehaviour
     [ContextMenu("Test Follow Truck")]
     public void SetTruckAsTargetToRobot()
     {
-        targetObjectTransform = FindObjectOfType<TruckInteraction>().transform;
+        targetObjectTransform = FindObjectOfType<RvInteraction>().transform;
         agent.SetDestination(targetObjectTransform.position);
         followObject = FollowObject.Truck;
     }
@@ -237,7 +237,7 @@ public class RobotMovement : MonoBehaviour
 
     public void SetTargetTruckGunPosition()
     {
-        targetObjectTransform = FindObjectOfType<TruckInteraction>().transform;
+        targetObjectTransform = FindObjectOfType<RvInteraction>().transform;
         agent.SetDestination(targetObjectTransform.position);
         followObject = FollowObject.TruckGun;
     }

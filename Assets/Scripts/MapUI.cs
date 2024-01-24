@@ -56,7 +56,7 @@ public class MapUI : MonoBehaviour
     }
     private void Start()
     {
-        TruckInteraction.Instance.OnPlayerInteractedWithTruck += TruckInteraction_OnPlayerInteractedWithTruck;
+        RvInteraction.Instance.OnPlayerInteractedWithTruck += TruckInteraction_OnPlayerInteractedWithTruck;
         TruckMovement.OnTruckReachedTargetLab += TruckMovement_OnTruckReachedTargetLab;
         Hide();
     }
@@ -87,7 +87,7 @@ public class MapUI : MonoBehaviour
     }
     private void OnDisable()
     {
-        TruckInteraction.Instance.OnPlayerInteractedWithTruck -= TruckInteraction_OnPlayerInteractedWithTruck;
+        RvInteraction.Instance.OnPlayerInteractedWithTruck -= TruckInteraction_OnPlayerInteractedWithTruck;
         TruckMovement.OnTruckReachedTargetLab -= TruckMovement_OnTruckReachedTargetLab;
 
     }

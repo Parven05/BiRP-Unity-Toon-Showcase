@@ -3,9 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TruckInteraction : MonoBehaviour,IInteractable
+public class RvInteraction : MonoBehaviour,IInteractable
 {
-    public static TruckInteraction Instance { get; private set; }
+    public static RvInteraction Instance { get; private set; }
 
     [SerializeField] private Transform topLandingTransform;
 
