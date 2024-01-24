@@ -12,7 +12,7 @@ public class DetectionSensor : MonoBehaviour
     private Vector3 entityLocation;
     private bool canReturnPlayer = false;
 
-    [SerializeField] private Light indigator;
+    [SerializeField] private Material indigatorMaterial;
     private void FixedUpdate()
     {
         if (canReturnPlayer) return;
@@ -27,9 +27,14 @@ public class DetectionSensor : MonoBehaviour
                 entityLocation = entity.transform.position;
                 canReturnPlayer = true;
                 GetComponent<RobotMovement>().SetPlayerAsTargetToRobotAndStop();
-                indigator.color = Color.red;
+                indigatorMaterial.color = Color.red;
             }
            
+        }
+        else
+        {
+            if(indigatorMaterial.color != Color.red)
+            indigatorMaterial.color = Color.green;
         }
     }
 }

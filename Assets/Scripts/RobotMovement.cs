@@ -2,6 +2,7 @@ using DG.Tweening;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -180,7 +181,22 @@ public class RobotMovement : MonoBehaviour
             }
         }
 
-      
+        if (followObject == FollowObject.RechargePlace && agent.isActiveAndEnabled && !agent.pathPending)
+        {
+            timer += Time.deltaTime;
+
+            if (timer > timerMax)
+            {
+                agent.SetDestination(targetObjectTransform.position);
+                timer = 0;
+            }
+            //Debug.Log($"Player Reached Gun to Robo Dis {agent.remainingDistance}");
+            if (agent.remainingDistance < 0.1f)
+            {
+                Debug.Log("Player Reached Recharge Point");
+            }
+        }
+
     }
 
 
@@ -238,8 +254,17 @@ public class RobotMovement : MonoBehaviour
     {
         SetPlayerAsTargetToRobot();
     }
+
+    public void SetTargetTruckRechargePosition()
+    {
+        RobotRecharger[] robotRecharger = FindObjectsOfType<RobotRecharger>();
+        RobotRecharger nearByCharger = robotRecharger.OrderBy(charger => Vector3.Distance(transform.position, charger.transform.position)).FirstOrDefault();
+        if (nearByCharger != null) targetObjectTransform = nearByCharger.GetRechargeStandTransform();
+        agent.SetDestination(targetObjectTransform.position);
+        followObject = FollowObject.RechargePlace;
+    }
 }
 
 public enum FollowObject { 
-    Player,Truck,TruckGun,SearchBodies,Null
+    Player,Truck,TruckGun,SearchBodies,Null,RechargePlace
 }

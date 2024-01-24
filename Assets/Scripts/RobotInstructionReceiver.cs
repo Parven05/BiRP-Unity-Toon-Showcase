@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -30,6 +31,9 @@ public class RobotInstructionReceiver : MonoBehaviour
             case "Follow Me":
                 FollowMe(false);
                 break;
+            case "Recharge Robot":
+                RechargeRobot(false);
+                break;
             case "Get In Truck":
                 GetInTruck(false);
                 break;
@@ -52,6 +56,9 @@ public class RobotInstructionReceiver : MonoBehaviour
             case "Follow Me":
                 FollowMe(true);
                 break;
+            case "Recharge Robot":
+                RechargeRobot(true);
+                break;
             case "Get In Truck":
                 GetInTruck(true);
                 break;
@@ -72,6 +79,12 @@ public class RobotInstructionReceiver : MonoBehaviour
         if (inRadiusStatus) robotMovement.SetTargetTruckGunPosition();
         else Debug.Log("OOps Robot Cant Perfom DEFENCE TRUCK Not In Range");
     }
+    private void RechargeRobot(bool inRadiusStatus)
+    {
+        if (inRadiusStatus) robotMovement.SetTargetTruckRechargePosition();
+        else Debug.Log("OOps Robot Cant Perform Recharge Robot Not In Range");
+    }
+
     private void SearchBodies(bool inRadiusStatus)
     {
         if (inRadiusStatus) robotMovement.SetSearchForBodies();
