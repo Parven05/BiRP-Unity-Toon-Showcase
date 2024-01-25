@@ -38,7 +38,7 @@ public class Interactor : MonoBehaviour
         {
             if (hit.collider.TryGetComponent(out IInteractable interactable))
             {
-                interactable.Interact(transform);
+                interactable.Interact();
             }
         }
     }
@@ -86,10 +86,7 @@ public class Interactor : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.E))
         {
-            if (currentInteractable != null)
-            {
-                currentInteractable.Interact(transform);
-            }
+            currentInteractable?.Interact();
         }
 
         if (Input.GetKeyDown(KeyCode.Mouse0))

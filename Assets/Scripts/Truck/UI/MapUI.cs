@@ -11,10 +11,9 @@ public class MapUI : MonoBehaviour
     [SerializeField] private Transform mapButtonsUIParent;
     [SerializeField] private Button stopRequestButton;
 
-    public event Action<LabAddress,Transform> OnPlayerSelectedLab;
+    public event Action<LabAddress> OnPlayerSelectedLab;
     public event Action OnPlayerMadeStopRequest;
 
-    private Transform interactorTransform = null;
     private int movingLabId;
     private void Awake()
     {
@@ -34,7 +33,7 @@ public class MapUI : MonoBehaviour
             if (mapAddressList[i].labId == labId)
             {
                 mapAddressList[i].UiMapButton.interactable = false;
-                OnPlayerSelectedLab?.Invoke(mapAddressList[i],interactorTransform);
+                OnPlayerSelectedLab?.Invoke(mapAddressList[i]);
                 movingLabId = labId;
                 stopRequestButton.gameObject.SetActive(true);
                 CloseUI();
@@ -92,9 +91,8 @@ public class MapUI : MonoBehaviour
 
     }
 
-    private void TruckInteraction_OnPlayerInteractedWithTruck(Transform interactorTransform)
+    private void TruckInteraction_OnPlayerInteractedWithTruck()
     {
-        this.interactorTransform = interactorTransform;
         Show();
     }
 

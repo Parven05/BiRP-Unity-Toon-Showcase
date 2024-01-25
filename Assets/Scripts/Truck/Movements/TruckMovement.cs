@@ -36,11 +36,9 @@ public class TruckMovement : MonoBehaviour
         MapUI.Instance.OnPlayerMadeStopRequest -= MapUI_Instance_OnPlayerMadeStopRequest;
     }
 
-    private void MapUI_Instance_OnPlayerSelectedLab(LabAddress labAddress,Transform interactor)
+    private void MapUI_Instance_OnPlayerSelectedLab(LabAddress labAddress)
     {
         this.targetLabTransform = labAddress.labLocatedPosition;
-        interactor.transform.SetParent(this.transform);
-        //interactor.localPosition = Vector3.zero + Vector3.up * 0.9f;
     }
 
     private void Update()

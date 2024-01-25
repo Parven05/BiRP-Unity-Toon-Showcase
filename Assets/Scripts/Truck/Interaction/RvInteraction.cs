@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class RvInteraction : MonoBehaviour,IInteractable
@@ -9,15 +7,15 @@ public class RvInteraction : MonoBehaviour,IInteractable
 
     [SerializeField] private Transform topLandingTransform;
 
-    public event Action<Transform> OnPlayerInteractedWithTruck;
+    public event Action OnPlayerInteractedWithTruck;
     private void Awake()
     {
         Instance = this;
     }
-    public void Interact(Transform interactor)
+    public void Interact()
     {
         Debug.Log("Truck Interacted");
-        OnPlayerInteractedWithTruck?.Invoke(interactor);
+        OnPlayerInteractedWithTruck?.Invoke();
     }
 
     public Transform GetTruckStandPos()
