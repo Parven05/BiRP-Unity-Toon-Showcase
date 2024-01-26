@@ -240,7 +240,7 @@ MonoBehaviour:
     value: 0.2
   roundness:
     overrideState: 1
-    value: 1
+    value: 0.8
   rounded:
     overrideState: 1
     value: 1

@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: GridBox_Toon
-  m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
+  m_Shader: {fileID: 4800000, guid: e344358da9bef1244bc7610597f116f6, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -144,7 +144,7 @@ Material:
     - _OcclusionStrength: 1
     - _Outline: 1
     - _OutlineMaskAlphaClip: 0.5
-    - _OutlineSize: 0.05
+    - _OutlineSize: 0.01
     - _Parallax: 0.02
     - _PointSpotLightBoost: 10
     - _SmoothnessStrength: 0
