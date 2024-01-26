@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
@@ -13,8 +11,8 @@ public class GiantRat : BaseEntity
     [SerializeField] private float patrolRadius = 10f;
     protected override void InitializeStateMachine()
     {
-        stateMachine = new StateMachine();
-        stateMachine.SetState(new IdleState(this));
+        //stateMachine = new StateMachine();
+        //stateMachine.SetState(new IdleState(this));
     }
 
     private class IdleState : IState
@@ -36,7 +34,7 @@ public class GiantRat : BaseEntity
 
         public void Exit()
         {
-            
+
         }
     }
 
