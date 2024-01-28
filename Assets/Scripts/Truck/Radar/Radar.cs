@@ -3,6 +3,7 @@ using Ilumisoft.RadarSystem.UI;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Radar : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class Radar : MonoBehaviour
     [SerializeField] private GameObject pingPrefab;
     [SerializeField] private Transform radarAnalogeTransform;
     [SerializeField] private LayerMask detectableLayerMask;
+    [SerializeField] private Image radiusCircleImage;
     private Vector3 radarOrginPosition;
     [Header("Radar Variables")]
     [SerializeField] private float radarSpeed = 5f;
@@ -22,10 +24,6 @@ public class Radar : MonoBehaviour
     [Header("Radar Debug Variables")]
     [SerializeField] private bool canRotateRadar = true;
 
-    private void Awake()
-    {
-        radarOrginPosition = transform.position + -transform.up * 3f;
-    }
     private void Start()
     {
         LocationIndigationIcon.OnLocationIndigationIconDestroyed += LocationIndigationIcon_OnLocationIndigationIconDestroyed;
@@ -48,15 +46,24 @@ public class Radar : MonoBehaviour
             radarAnalogeTransform.eulerAngles -= new Vector3(0, 0, Time.deltaTime * radarSpeed * 5);
         }
 
+        radarOrginPosition = transform.position + -transform.up * 3f;
+
+        float scaleValue = 16f / 50f * detectionRadius;
+        radiusCircleImage.transform.localScale = new Vector3(scaleValue, scaleValue, scaleValue);
+
+
         // Clear the colliderArray at the beginning of each frame
-        Array.Clear(colliderArray, 0, colliderArray.Length);
+        //Array.Clear(colliderArray, 0, colliderArray.Length);
 
         int colliderCount = Physics.OverlapSphereNonAlloc(radarOrginPosition, detectionRadius, colliderArray, detectableLayerMask);
 
+        Debug.Log(colliderCount);
         if (colliderCount > 0)
         {
-            foreach (Collider collider in colliderArray)
+            for (int i = 0; i < colliderCount; i++)
             {
+                Collider collider = colliderArray[i];
+                Debug.Log(colliderArray[i].gameObject.name);
                 if (collider != null)
                 {
                     Vector3 direction = collider.gameObject.transform.position - radarOrginPosition;
@@ -82,44 +89,20 @@ public class Radar : MonoBehaviour
                         Debug.DrawLine(collider.gameObject.transform.position, radarOrginPosition, Color.green);
                     }
 
+                    colliderArray[i] = null;
                 }
             }
+        }
+        else
+        {
+            enemiesList.Clear();
         }
     }
 
     private void CreateIconOnUiContainer(BaseEntity baseEntity)
     {
-        //// Calculate the position of the icon on the radar UI based on radar-to-enemy radius
-        //Vector3 directionToEnemy = baseEntity.transform.position - radarOrginPosition;
-        //float distanceToEnemy = directionToEnemy.magnitude;
-        //float normalizedDistance = Mathf.Clamp01(distanceToEnemy / detectionRadius);
-
-        //// Calculate the angle of the enemy relative to the radar's forward direction
-        //float angle = Vector3.Angle(transform.forward, directionToEnemy);
-
-        //// Create an instance of the pingPrefab on radarUIContainer
-        //GameObject iconInstance = Instantiate(pingPrefab, radarUIContainer);
-        //RectTransform iconRectTransform = iconInstance.GetComponent<RectTransform>();
-        //LocationIndigationIcon locationIndigationIcon = iconInstance.GetComponent<LocationIndigationIcon>();
-
-        //locationIndigationIcon.SetBaseEntity(baseEntity);
-
-        //// Set the position of the icon based on the normalized distance and angle
-        //float radius = radarUIContainer.rect.width / 2f;
-        //float xPosition = normalizedDistance * radius * Mathf.Cos(Mathf.Deg2Rad * angle);
-        //float yPosition = normalizedDistance * radius * Mathf.Sin(Mathf.Deg2Rad * angle);
-
-        //iconRectTransform.anchoredPosition = new Vector2(xPosition, yPosition);
-
         if (TryGetIconLocation(baseEntity, out var iconLocation))
         {
-            //icon.SetVisible(true);
-
-            //var rectTransform = icon.GetComponent<RectTransform>();
-
-            //rectTransform.anchoredPosition = iconLocation;
-
-            //// Create an instance of the pingPrefab on radarUIContainer
             GameObject iconInstance = Instantiate(pingPrefab, radarUIContainer);
             RectTransform iconRectTransform = iconInstance.GetComponent<RectTransform>();
             iconRectTransform.anchoredPosition = iconLocation;
@@ -142,26 +125,23 @@ public class Radar : MonoBehaviour
 
         iconLocation *= scale;
 
-        // Rotate the icon by the players y rotation if enabled
-        //if (ApplyRotation)
-        //{
-            // Get the forward vector of the player projected on the xz plane
-            var playerForwardDirectionXZ = Vector3.ProjectOnPlane(radarOrginPosition + Vector3.forward, Vector3.up);
+        // Get the forward vector of the player projected on the xz plane
+        var playerForwardDirectionXZ = Vector3.ProjectOnPlane(radarOrginPosition + Vector3.forward, Vector3.up);
 
-            // Create a roation from the direction
-            var rotation = Quaternion.LookRotation(playerForwardDirectionXZ);
+        // Create a roation from the direction
+        var rotation = Quaternion.LookRotation(playerForwardDirectionXZ);
 
-            // Mirror y rotation
-            var euler = rotation.eulerAngles;
-            euler.y = -euler.y;
-            rotation.eulerAngles = euler;
+        // Mirror y rotation
+        var euler = rotation.eulerAngles;
+        euler.y = -euler.y;
+        rotation.eulerAngles = euler;
 
-            // Rotate the icon location in 3D space
-            var rotatedIconLocation = rotation * new Vector3(iconLocation.x, 0.0f, iconLocation.y);
+        // Rotate the icon location in 3D space
+        var rotatedIconLocation = rotation * new Vector3(iconLocation.x, 0.0f, iconLocation.y);
 
-            // Convert from 3D to 2D
-            iconLocation = new Vector2(rotatedIconLocation.x, rotatedIconLocation.z);
-        //}
+        // Convert from 3D to 2D
+        iconLocation = new Vector2(rotatedIconLocation.x, rotatedIconLocation.z);
+
 
         if (iconLocation.sqrMagnitude < radarSize * radarSize)
         {
@@ -185,5 +165,11 @@ public class Radar : MonoBehaviour
 
         return new Vector2(distanceToPlayer.x, distanceToPlayer.z);
     }
+
+    //private void OnDrawGizmos()
+    //{
+    //    Gizmos.color = Color.magenta;
+    //    Gizmos.DrawWireSphere(radarOrginPosition, detectionRadius);
+    //}
 
 }
