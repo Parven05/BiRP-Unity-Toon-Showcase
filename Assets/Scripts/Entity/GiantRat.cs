@@ -11,8 +11,8 @@ public class GiantRat : BaseEntity
     [SerializeField] private float patrolRadius = 10f;
     protected override void InitializeStateMachine()
     {
-        //stateMachine = new StateMachine();
-        //stateMachine.SetState(new IdleState(this));
+        stateMachine = new StateMachine();
+        stateMachine.SetState(new IdleState(this));
     }
 
     private class IdleState : IState
@@ -41,8 +41,6 @@ public class GiantRat : BaseEntity
     private class PatrolState : IState
     {
         private GiantRat owner;
-        private float patrolTimer = 0f;
-        private float patrolDuration = 5f; 
         public PatrolState(GiantRat owner)
         {
             this.owner = owner;
@@ -59,23 +57,13 @@ public class GiantRat : BaseEntity
             owner.gatheredColloderCount = Physics.OverlapSphereNonAlloc(owner.transform.position, owner.sightRadius,
                                                                         owner.attckableObjColliders ,owner.attackablesLayer);
             //Debug.Log(owner.gatheredColloderCount);
-            if(owner.attckableObjColliders.Length <= 0)
-            {
-                // Continue Patrolling
-                // Check if reached destination
-                if (!owner.agent.pathPending && owner.agent.remainingDistance < 0.1f)
-                {
-                    patrolTimer += Time.deltaTime;
+            // Check if reached destination
 
-                    // If patrol duration reached, set a new destination
-                    if (patrolTimer >= patrolDuration)
-                    {
-                        SetRandomDestination();
-                        patrolTimer = 0f;
-                    }
-                }
+            if (!owner.agent.pathPending && owner.agent.remainingDistance < 0.1f)
+            {
+                // If patrol duration reached, set a new destination
+                 SetRandomDestination();
             }
-            
 
             if (owner.gatheredColloderCount > 0)
             {
