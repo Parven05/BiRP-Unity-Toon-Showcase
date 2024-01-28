@@ -1,10 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class DetectionSensor : MonoBehaviour
 {
-    [SerializeField] private int detectedEntityAmount;
+    private int detectedEntityAmount;
     [SerializeField] private float detectionRadius = 20f;
     [SerializeField] private LayerMask entityLayerMask;
     private Collider[] detectedColliderArray = new Collider[30];

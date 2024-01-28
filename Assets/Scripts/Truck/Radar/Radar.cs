@@ -51,19 +51,15 @@ public class Radar : MonoBehaviour
         float scaleValue = 16f / 50f * detectionRadius;
         radiusCircleImage.transform.localScale = new Vector3(scaleValue, scaleValue, scaleValue);
 
-
-        // Clear the colliderArray at the beginning of each frame
-        //Array.Clear(colliderArray, 0, colliderArray.Length);
-
         int colliderCount = Physics.OverlapSphereNonAlloc(radarOrginPosition, detectionRadius, colliderArray, detectableLayerMask);
 
-        Debug.Log(colliderCount);
+        //Debug.Log(colliderCount);
         if (colliderCount > 0)
         {
             for (int i = 0; i < colliderCount; i++)
             {
                 Collider collider = colliderArray[i];
-                Debug.Log(colliderArray[i].gameObject.name);
+                //Debug.Log(colliderArray[i].gameObject.name);
                 if (collider != null)
                 {
                     Vector3 direction = collider.gameObject.transform.position - radarOrginPosition;
@@ -78,7 +74,7 @@ public class Radar : MonoBehaviour
                         {
                             if (!enemiesList.Contains(baseEntity))
                             {
-                                Debug.Log("Detected Entity At : " + collider.gameObject.transform.position);
+                                //Debug.Log("Detected Entity At : " + collider.gameObject.transform.position);
                                 enemiesList.Add(baseEntity);
                                 CreateIconOnUiContainer(baseEntity);
                             }
@@ -165,11 +161,4 @@ public class Radar : MonoBehaviour
 
         return new Vector2(distanceToPlayer.x, distanceToPlayer.z);
     }
-
-    //private void OnDrawGizmos()
-    //{
-    //    Gizmos.color = Color.magenta;
-    //    Gizmos.DrawWireSphere(radarOrginPosition, detectionRadius);
-    //}
-
 }
