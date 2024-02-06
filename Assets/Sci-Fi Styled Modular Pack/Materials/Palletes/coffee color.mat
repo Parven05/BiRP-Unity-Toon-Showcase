@@ -32,7 +32,7 @@ Material:
   - _ZTEST_LESSEQUAL
   - _ZWRITE_ON
   m_LightmapFlags: 1
-  m_EnableInstancingVariants: 0
+  m_EnableInstancingVariants: 1
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
   stringTagMap: {}
@@ -132,9 +132,9 @@ Material:
     - _OcclusionStrength: 1
     - _Outline: 1
     - _OutlineMaskAlphaClip: 0.5
-    - _OutlineSize: 0
+    - _OutlineSize: 0.5
     - _Parallax: 0.08
-    - _PointSpotLightBoost: 10
+    - _PointSpotLightBoost: 3
     - _SmoothnessStrength: 1
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
