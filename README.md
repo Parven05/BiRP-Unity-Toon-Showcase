@@ -13,4 +13,5 @@ In this project, add some cartoon-style shading features. These will make object
 
 ## **Author:**
 https://symmasolan.itch.io/scs - An elegant, lightweight PBR-lite Surface Cel Shader for Unity BiRP
+
 https://github.com/AGM-GR/EdgeDetection - Edge Detection, Post Processing Stack
