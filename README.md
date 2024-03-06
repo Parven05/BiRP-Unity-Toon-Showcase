@@ -2,7 +2,7 @@
 ![Engine](https://badgen.net/badge/Engine/Unity/blue)
 ![License](https://badgen.net/badge/license/MIT/green)
 
-# **Toon Shader Showcase - Wastelands**
+# **BiRP Unity Toon Shader Showcase - Wastelands**
 ![Banner](https://github.com/Parven05/Project-Wastelands/assets/101796812/dc0727c2-d399-41e6-a50e-3c6397b10c3a)
 
 ## **Introduction:**
